@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>demo</title>
+    <meta charset="utf-8">
+    <script src="jquery-1.8.3.min.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function(){
+    	$('#btn').on('click',function(){
+//    		alert($('#text').val());
+            var svgDoc = document.getElementById("svgiframe").getSVGDocument();
+//            console.log($(svgDoc));
+            var textObjs = $(svgDoc).find("text");
+            var len = textObjs.length;
+//            var svgObj = $(svgDoc).find("svg");
+            var svgObj = svgDoc.getElementsByTagName("svg");
+//            console.log(svgObj);
+//            console.log($(svgObj).children("g")[0].getBBox().width);
+            //获取主画板宽高
+            var svgGWidth = $(svgObj).children("g")[0].getBBox().width;
+            var svgGHeight = $(svgObj).children("g")[0].getBBox().height;
+//            console.log(svgGWidth);
+//            console.log(svgGHeight);
+            var x;
+            var y;
+            for(var i=0;i<len;i++){
+//                console.log(textObjs.eq(i));
+                if(textObjs.eq(i).html().indexOf($('#text').val())>0){
+//                    console.log(textObjs.eq(i).attr("x"));
+//                    console.log(textObjs.eq(i).attr("y"));
+//                    console.log(textObjs.eq(i).parent('g').attr("transform"));
+                    var transformStr = textObjs.eq(i).parent('g').attr("transform");
+//                    console.log(transformStr);
+                    var indexX = transformStr.indexOf('(');
+                    var indexY = transformStr.indexOf(',');
+//                    console.log(indexX);
+//                    console.log(indexY);
+                    var strlen = transformStr.length;
+//                    console.log(strlen);
+                    //获取当前搜索文字的画板g的坐标
+                    x = transformStr.substr(indexX+1,indexY-(indexX+1));
+                    y = transformStr.substr(indexY+1,strlen-indexY-2);
+//                    console.log("x:"+x+"y:"+y);
+                }
+            }
+            //通过判断位置
+            //变更svg大小
+//            $("#svgiframe").width($("#svgiframe").width()*2);
+//            $("#svgiframe").height($("#svgiframe").height()*2);
+            var wW = $(window).width();
+            var wH = $(window).height();
+            //绝对值
+            var absY = Math.abs(y);
+            //通过判断固定滚动距离 略
+            $(window).scrollTop(wW*absY/svgGHeight);
+            console.log(wW*absY/svgGHeight);
+            $(window).scrollLeft(wH*x/svgGWidth);
+    	});
+    });
+    </script>
+    <style type="text/css">
+        .highlight{background:green;font-weight:bold;color:white;}
+    </style>
+</head>
+
+<body>
+
+    <!--<h2>SVG Demonstration</h2>-->
+    <!--<p>A page may have other code besides the SVG image.</p>-->
+    <P>
+        <input type="text" id="text" value="阿斯蒂芬"/>
+        <input type="button" id="btn" value="btn">
+    </P>
+    <embed type="image/svg+xml" src="demo.svg" width="900" height="600" id="svgiframe"></embed>
+</body>
+</html>

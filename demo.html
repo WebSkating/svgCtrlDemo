@@ -8,7 +8,7 @@
     $(document).ready(function(){
     	$('#btn').on('click',function(){
 //    		alert($('#text').val());
-            var svgDoc = document.getElementById("svgiframe").getSVGDocument();
+            var svgDoc = document.getElementById("svgembed").getSVGDocument();
 //            console.log($(svgDoc));
             var textObjs = $(svgDoc).find("text");
             var len = textObjs.length;
@@ -29,6 +29,7 @@
 //                    console.log(textObjs.eq(i).attr("x"));
 //                    console.log(textObjs.eq(i).attr("y"));
 //                    console.log(textObjs.eq(i).parent('g').attr("transform"));
+                    console.log(textObjs.eq(i).attr("class", "highlight"));
                     var transformStr = textObjs.eq(i).parent('g').attr("transform");
 //                    console.log(transformStr);
                     var indexX = transformStr.indexOf('(');
@@ -59,7 +60,6 @@
     });
     </script>
     <style type="text/css">
-        .highlight{background:green;font-weight:bold;color:white;}
     </style>
 </head>
 
@@ -71,6 +71,6 @@
         <input type="text" id="text" value="阿斯蒂芬"/>
         <input type="button" id="btn" value="btn">
     </P>
-    <embed type="image/svg+xml" src="demo.svg" width="900" height="600" id="svgiframe"></embed>
+    <embed type="image/svg+xml" src="demo.svg" width="900" height="600" id="svgembed"></embed>
 </body>
 </html>

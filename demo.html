@@ -11,6 +11,7 @@
             var svgDoc = document.getElementById("svgembed").getSVGDocument();
 //            console.log($(svgDoc));
             var textObjs = $(svgDoc).find("text");
+            textObjs.attr("class", "st4")
             var len = textObjs.length;
 //            var svgObj = $(svgDoc).find("svg");
             var svgObj = svgDoc.getElementsByTagName("svg");
